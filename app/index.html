@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>EZ Budget</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -33,28 +33,49 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">inf6150Frontend</a>
+            <a class="navbar-brand" href="#/">EZ Budget</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+              <li ng-show="!authenticated" class="active"><a href="#/login">Login</a></li>
+              <li ng-show="!authenticated" class="active"><a href="#/register">Register</a></li>
             </ul>
+            <div ng-show="authenticated" class="pull-right">
+              <div class="navbar-brand">Bienvenue {{ user.firstName }}</div>
+              <div class="navbar-brand pull-right dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="caret"><span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#/" ng-click="logout()">Déconnexion</a></li>
+                  </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <div class="container">
-    <div ng-view=""></div>
+      <div ng-show="loggedOut">
+         <div class="alert alert-success">
+            Vous avez été déconnecté correctement.
+          </div>
+      </div>
+      <div ng-show="error">
+         <div class="alert alert-danger">
+            Une erreur est survenue.
+          </div>
+      </div>
+
+      <div ng-view=""></div>
     </div>
 
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+        <p><span class="glyphicon"></span>EZ Budget</p>
       </div>
     </div>
 
@@ -83,13 +104,15 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/services/user.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/user.js"></script>
         <!-- endbuild -->
 </body>
 </html>

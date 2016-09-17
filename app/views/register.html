@@ -1,0 +1,54 @@
+<div ng-show="!authenticated" ng-controller="UserCtrl" class="container well well-sm">
+    <h2>Register</h2>
+    <div class="alert alert-danger" ng-show="error">
+		There was a problem registering. Please try again.
+	</div>
+     <form role="form" name="registerForm" novalidate class="form-horizontal">
+     	 <div class="control-group">
+            <label class="control-label col-sm-4" for="firstname">Prénom</label>
+            <div class="controls col-sm-8">
+                <input class="form-control" name="firstname" type="text" id="firstname" ng-model="user.firstName" required/>
+                <span class="help-block" ng-show="registerForm.firstname.$error.required && registerForm.firstname.$dirty">Champs Requis</span>
+            </div>
+
+            <label class="control-label col-sm-4" for="lastname">Nom</label>
+            <div class="controls col-sm-8">
+                <input name="lastname" class="form-control" type="text" id="lastname" ng-model="user.lastName" required/>
+                <span class="help-block" ng-show="registerForm.lastname.$error.required && registerForm.lastname.$dirty">Champs Requis</span>
+            </div>
+
+            <label class="control-label col-sm-4" for="username">Username</label>
+            <div class="controls col-sm-8">
+                <input name="username" class="form-control" type="text" id="username" ng-model="user.username" required/>
+                <span class="help-block" ng-show="registerForm.username.$error.required && registerForm.username.$dirty">Champs Requis</span>
+            </div>
+
+            <label class="control-label col-sm-4" for="email">Courriel</label>
+            <div class="controls col-sm-8">
+                <input name="email" class="form-control" type="email" id="email" ng-model="user.email" required/>
+                <span class="help-block" ng-show="registerForm.email.$error.required && registerForm.email.$dirty">Champs Requis</span>
+                <span class="help-block" ng-show="registerForm.email.$error.email && registerForm.email.$dirty">Le courriel entré n'est pas valide</span>
+            </div>
+
+            <label class="control-label col-sm-4" for="password">Password</label>
+            <div class="controls col-sm-8">
+                <input name="password" class="form-control" type="password" id="password" ng-model="user.password" required/>
+                <span class="help-block" ng-show="registerForm.password.$error.required && registerForm.password.$dirty">Champs Requis</span>
+            </div>
+            <label class="control-label col-sm-4" for="retype-password">Retype Password</label>
+            <div class="controls col-sm-8">
+                <input name="password2" class="form-control" type="password" id="retype-password" ng-model="user.password2" required/>
+                <span class="help-block" ng-show="registerForm.password2.$error.required && registerForm.password2.$dirty">Champs Requis</span>
+                <span class="help-block" ng-show="user.password != user.password2 && registerForm.password2.$dirty">La vérification du password n'est pas bonne.</span>
+            </div>
+
+        </div>
+        <p></p>
+         <div class="control-group">
+            <div class="controls">
+              <button ng-disabled="registerForm.$invalid" ng-click="createNewUser()" class="btn btn-small btn-primary">Register</button>
+              <a ng-click="cancel()" class="btn btn-small">cancel</a>
+            </div>
+        </div>
+     </form>
+</div>
