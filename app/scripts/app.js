@@ -47,6 +47,11 @@ angular
         controller: 'UserCtrl',
         controllerAs: 'register'
       })
+      .when('/activate/:token/:username', {
+        templateUrl: 'views/activate.html',
+        controller: 'UseractivateCtrl',
+        controllerAs: 'userActivate'
+      })
       .otherwise({
         redirectTo: '/login'
       });
