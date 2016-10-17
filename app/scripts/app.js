@@ -20,7 +20,6 @@ angular
     'ngTouch',
     'LocalStorageModule',
     'UserServices'
-
   ])
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){
     localStorageServiceProvider.setPrefix('EB');
@@ -51,6 +50,11 @@ angular
         templateUrl: 'views/activate.html',
         controller: 'UseractivateCtrl',
         controllerAs: 'userActivate'
+      })
+      .when('/accounts', {
+        templateUrl: 'views/accounts.html',
+        controller: 'AccountsCtrl',
+        controllerAs: 'Accounts'
       })
       .otherwise({
         redirectTo: '/login'
