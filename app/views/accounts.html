@@ -14,26 +14,18 @@
         	<td ng-hide="editing">{{account.type}}</td>
         	<td ng-hide="editing"><a ng-click="editing = true" class="btn btn-small btn-primary">Éditer</a></td>
 		    <td ng-hide="editing"><a ng-click="deleteAccount(account.id)" class="btn btn-small btn-danger">Supprimer</a></td> 
-			<form ng-show="editing" ng-submit="editing = false">
-				<td>
-				    <input type="text" ng-model="account.accountName" placeholder="Nom" ng-required/>
+			<form>
+				<td ng-show="editing">
+				    <input type="text" ng-model="account.accountName" placeholder="Nom"/>
 			    </td>
-			    <td>
-				    <input type="text" ng-model="account.type" placeholder="CR" ng-required/>
+			    <td ng-show="editing">
+				    <input type="text" ng-model="account.type" placeholder="CR"/>
 			    </td>
-			    <td></td>
-			    <td>
-			    	<button class="btn" type="submit">Enregistrer</button>
+			    <td ng-show="editing"></td>
+			    <td ng-show="editing">
+			    	<button class="btn btn-small btn-primary" ng-click="editing = false">Enregistrer</button>
 			    </td>
-			</form> 
-	        <!-- 
-	        <div ng-show="account.editting">
-		       	<td>{{ account.accountName }}</td>
-		        <td>{{ account.type }}</td>
-		        <td><a ng-click="account.editting = true" class="btn btn-small btn-primary">Éditer</a></td>
-		        <td><a ng-click="deleteAccount(account.id)" class="btn btn-small btn-danger">Supprimer</a></td> 
-	        </div>
-	        -->        	            
+			</form>       	            
         </tr>
         </tbody>
     </table>
