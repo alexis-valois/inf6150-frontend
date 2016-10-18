@@ -13,7 +13,7 @@ angular.module('inf6150FrontendApp')
         create: { method: 'POST' },
         findAll: { method: 'GET', isArray: true},
         findOne: { method: 'GET', params: {id: '@id'}},
-        edit: { method: 'PUT', params: {id: '@id'}},
+        update: { method: 'PUT', params: {id: '@id'}},
         delete: {method: 'DELETE', params: {id: '@id'}}
       });
       
