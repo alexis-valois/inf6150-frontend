@@ -30,7 +30,7 @@
 				    <input type="text" ng-model="account.type" placeholder="CR"/>
 			    </td>
 			    <td ng-show="editing">
-			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false && updateAccount(account)">Enregistrer</button>
+			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(account)">Enregistrer</button>
 			    </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
@@ -39,5 +39,5 @@
         </tr>
         </tbody>
     </table>
-    <a ng-click="addAccount()" class="btn btn-small">Ajouter un nouveau compte</a>
+    <a ng-click="addEmptyAccount()" class="btn btn-small">Ajouter un nouveau compte</a>
 </div>

@@ -13,6 +13,18 @@ angular.module('inf6150FrontendApp')
 
   		$scope.accounts = AccountService.findAll();
 
+  		$scope.addEmptyAccount = function(){
+  			$scope.accounts.push({});
+  		};
+
+  		$scope.createOrUpdate = function(account){
+  			if (account.id){
+  				AccountService.update({ id: account.id }, account);
+  			}else{
+  				AccountService.create(account);
+  			}  			
+  		};
+
 	    $scope.deleteAccount = function(accountId) {
 	        AccountService.delete({ id: accountId })
 	            .$promise.then(
