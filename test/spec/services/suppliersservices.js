@@ -14,5 +14,6 @@ describe('Service: SuppliersServices', function () {
   it('should do something', function () {
     expect(!!SuppliersServices).toBe(true);
   });
+  
 
 });

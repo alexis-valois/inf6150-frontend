@@ -17,5 +17,6 @@ angular.module('inf6150FrontendApp')
         update: { method: 'PUT', params: {id: '@id'}},
         delete: {method: 'DELETE', params: {id: '@id'}}
       });
+	  
       
   });

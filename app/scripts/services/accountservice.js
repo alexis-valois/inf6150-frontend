@@ -10,6 +10,7 @@
 angular.module('inf6150FrontendApp')
   .service('AccountService', function ($resource) {
   	return $resource('http://localhost:8081/rest/entity/accounts/:id', {}, {
+	      
         create: { method: 'POST' },
         findAll: { method: 'GET', isArray: true},
         findOne: { method: 'GET', params: {id: '@id'}},

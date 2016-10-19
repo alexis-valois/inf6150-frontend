@@ -20,4 +20,5 @@ describe('Controller: SupplierCtrl', function () {
   it('should attach a list of awesomeThings to the scope', function () {
     expect(SupplierCtrl.awesomeThings.length).toBe(3);
   });
+  
 });
