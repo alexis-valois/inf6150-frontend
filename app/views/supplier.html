@@ -1,0 +1,54 @@
+
+
+<div ng-controller="SupplierCtrl">
+
+ 
+
+<table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th style="min-width: 80px;">Nom du fournisseur</th>
+			
+                       
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="supplier in suppliers">
+            
+            <td ng-hide="editing">{{ supplier.supplierName }}</td>
+			
+			<td ng-hide="editing">
+			    <div>
+        			<a ng-click="editing = true;reload()" class="btn btn-small btn-primary btn-block">&eacutediter</a>
+        		</div>
+        	</td>
+		    <td ng-hide="editing">
+		    	<div>
+		    		<a ng-click="deleteSupplier(supplier.id)" class="btn btn-small btn-danger btn-block">Supprimer</a>
+		    	</div>
+		    </td> 
+			
+			<form>
+				<td ng-show="editing">
+				    <input type="text" ng-model="supplier.supplierName" placeholder="Nom"/>
+			    </td>
+			    
+			    <td ng-show="editing">
+			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(supplier);reload()">Enregistrer</button>
+			    </td>
+			    <td ng-show="editing">
+			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
+			    </td>
+			</form>       
+			
+			
+            
+        </tr>
+        </tbody>
+    </table>
+	
+	 <a ng-click="addEmptySupplier()" class="btn btn-small">Ajouter un nouveau fournisseur</a>
+
+
+
+</div>
