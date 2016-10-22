@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "nom": "Transport",
+        "userId" : 2,
+        "date_creation": "2016-05-26",
+        "date_modification" : "2016-05-26"
+    },
+    {
+        "id": 2,
+        "nom": "Télécommunication",
+        "userId" : 1,
+        "date_creation": "2016-05-23",
+        "date_modification" : "2016-05-26"
+    },
+    {
+        "id": 3,
+        "nom": "Restaurent",
+        "userId" : 1,
+        "date_creation": "2016-07-26",
+        "date_modification" : "2016-07-26"
+    },
+    {
+        "id": 4,
+        "nom": "Epicerie",
+        "userId" : 2,
+        "date_creation": "2016-10-17",
+        "date_modification" : "2016-10-17"
+    },
+    {
+        "id": 5,
+        "nom": "Loyer",
+        "userId" : 1,
+        "date_creation": "2016-10-17",
+        "date_modification" : "2016-10-17"
+    },
+    {
+        "id": 6,
+        "nom": "garde-robe",
+        "userId" : 4,
+        "date_creation": "2016-10-17",
+        "date_modification" : "2016-10-17"
+    },
+    {
+        "id": 7,
+        "nom": "Cinema",
+        "userId" : 4,
+        "date_creation": "2016-10-17",
+        "date_modification" : "2016-10-17"
+    },
+    {
+        "id": 8,
+        "nom": "Sante",
+        "userId" : 3,
+        "date_creation": "2016-10-17",
+        "date_modification" : "2016-10-17"
+    },
+    {
+        "id": 9,
+        "nom": "Shopping",
+        "userId" : 6,
+        "date_creation": "2016-09-10",
+        "date_modification" : "2016-09-10"
+    }
+    
+]

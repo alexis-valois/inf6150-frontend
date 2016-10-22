@@ -56,6 +56,11 @@ angular
         controller: 'AccountsCtrl',
         controllerAs: 'Accounts'
       })
+      .when('/chemin/url/souhaite', {
+        templateUrl: 'views/categories.html',
+        controller: 'CategoriesCtrl',
+        controllerAs: 'Categories'
+      })
       .otherwise({
         redirectTo: '/login'
       });
