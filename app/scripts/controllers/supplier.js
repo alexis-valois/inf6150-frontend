@@ -10,15 +10,10 @@
  * # SupplierCtrl 
  * Controller of the inf6150FrontendApp 
  */ 
- angular.module('inf6150FrontendApp').controller('SupplierCtrl', ['$scope', '$route','$timeout','$window', 'SuppliersServices', 
-   	function ($scope, $route,$timeout,$window,SuppliersServices) { 
+ angular.module('inf6150FrontendApp').controller('SupplierCtrl', ['$scope', '$route', 'SuppliersServices', 
+   	function ($scope, $route,SuppliersServices) { 
  
-        $scope.reload=function(){ 
-   			
-			$timeout(callAtTimeout, 1000);
-			$scope.suppliers = SuppliersServices.findAll();			
-			
-   		}; 
+        
 		
    		$scope.suppliers = SuppliersServices.findAll(); 
  

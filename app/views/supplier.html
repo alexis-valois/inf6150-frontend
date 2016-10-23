@@ -19,7 +19,7 @@
 			
 			<td ng-hide="editing">
 			    <div>
-        			<a ng-click="editing = true;reload()" class="btn btn-small btn-primary btn-block">&eacutediter</a>
+        			<a ng-click="editing = true;" class="btn btn-small btn-primary btn-block">Éditer</a>
         		</div>
         	</td>
 		    <td ng-hide="editing">
@@ -34,7 +34,7 @@
 			    </td>
 			    
 			    <td ng-show="editing">
-			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(supplier);reload()">Enregistrer</button>
+			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(supplier);">Enregistrer</button>
 			    </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
