@@ -56,7 +56,7 @@ angular
         controller: 'AccountsCtrl',
         controllerAs: 'Accounts'
       })
-      .when('/chemin/url/souhaite', {
+      .when('/categories', {
         templateUrl: 'views/categories.html',
         controller: 'CategoriesCtrl',
         controllerAs: 'Categories'

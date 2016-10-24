@@ -10,7 +10,7 @@
 
 angular.module('inf6150FrontendApp')
   .service('CategoriesService', function ($resource) {
-  	return $resource('app/scripts/categories.json', {}, {
+  	return $resource('http://localhost:9000/scripts/categories.json', {}, {
         //create: { method: 'POST' },
         findAll: { method: 'GET', isArray: true},
         //findOne: { method: 'GET', params: {id: '@id'}},
