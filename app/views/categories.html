@@ -1,50 +1,39 @@
 <div ng-controller="CategoriesCtrl" class="span6">
-    <pre> {{categories|json}}</pre>
     <table class="table table-striped table-condensed table-hover">
         <thead>
         <tr>
-            <th style="min-width: 80px;">id de la categorie</th>
             <th style="min-width: 80px;">Nom de la categorie</th>
-            <th style="min-width: 80px;">userId</th>
-            <th style="min-width: 80px;">Date de creation</th>
-            <th style="min-width: 80px;">Date de modification</th>
             <th style="width:20px;"> </th>
             <th style="width:20px;"> </th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="categorie in categories">
-        	<td ng-hide="editing">{{categorie.id}}</td>
             <td ng-hide="editing">{{categorie.name}}</td>
-            <td ng-hide="editing">{{categorie.userId}}</td>
-            <td ng-hide="editing">{{categorie.date_creation}}</td>
-            <td ng-hide="editing">{{categorie.date_modification}}</td>
         	<td ng-hide="editing">
         		<div>
         			<a ng-click="editing = true" class="btn btn-small btn-primary btn-block">Éditer</a>
         		</div>
         	</td>
-		    <!--<td ng-hide="editing">
+		    <td ng-hide="editing">
 		    	<div>
 		    		<a ng-click="deleteCategories(categories.id)" class="btn btn-small btn-danger btn-block">Supprimer</a>
 		    	</div>
-		    </td> -->
-			<!--<form>
+		    </td>
+			<form>
 				<td ng-show="editing">
-				    <input type="text" ng-model="categories.categoriesName" placeholder="Nom"/>
+				    <input type="text" ng-model="categorie.categorieName" placeholder="Nom"/>
 			    </td>
 			    <td ng-show="editing">
-				    <input type="text" ng-model="categories.type" placeholder="CR"/>
-			    </td>
-			    <td ng-show="editing">
-			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(categories)">Enregistrer</button>
+			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(categorie)">Enregistrer</button>
 			    </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
 			    </td>
-			</form>  -->     	            
+			</form>    	            
         </tr>
         </tbody>
     </table>
-    <!--<a ng-click="addEmptyCategories()" class="btn btn-small">Ajouter une nouvelle categorie</a>-->
+    <a ng-click="addEmptyCategorie()" class="btn btn-small">Ajouter une nouvelle categorie</a>
 </div>
+

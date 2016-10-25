@@ -2,20 +2,20 @@
 
 /**
  * @ngdoc service
- * @name inf6150FrontendApp.Categories
+ * @name inf6150FrontendApp.AccountService
  * @description
- * # Categories
+ * # AccountService
  * Service in the inf6150FrontendApp.
  */
-
 angular.module('inf6150FrontendApp')
   .service('CategoriesService', function ($resource) {
-  	return $resource('http://localhost:9000/scripts/categories.json', {}, {
-        //create: { method: 'POST' },
+  	return $resource('http://localhost:8081/rest/entity/categories/:id', {}, {
+        create: { method: 'POST' },
         findAll: { method: 'GET', isArray: true},
-        //findOne: { method: 'GET', params: {id: '@id'}},
-        //update: { method: 'PUT', params: {id: '@id'}},
-        //delete: {method: 'DELETE', params: {id: '@id'}}
+        findOne: { method: 'GET', params: {id: '@id'}},
+        update: { method: 'PUT', params: {id: '@id'}},
+        delete: {method: 'DELETE', params: {id: '@id'}}
       });
       
   });
+

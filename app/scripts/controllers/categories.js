@@ -14,13 +14,13 @@ angular.module('inf6150FrontendApp')
 
   		$scope.categories = CategoriesService.findAll();
 
-  		/*$scope.addEmptyAccount = function(){
+  		$scope.addEmptyCategorie = function(){
   			$scope.categories.push({});
   		};
 
   		$scope.createOrUpdate = function(categorie){
   			if (categorie.id){
-  				CategoriesService.update({ id: categories.id }, categorie);
+  				CategoriesService.update({ id: categorie.id }, categorie);
   			}else{
   				CategoriesService.create(categorie);
   			}  			
@@ -33,5 +33,5 @@ angular.module('inf6150FrontendApp')
 	                        $scope.categories = CategoriesService.findAll();
 	                    }
 	                );
-	    };*/
+	    };
 }]);
