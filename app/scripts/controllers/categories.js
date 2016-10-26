@@ -27,7 +27,7 @@ angular.module('inf6150FrontendApp')
   		};
 
 	    $scope.deleteCategories = function(categoriesId) {
-	        AccountService.delete({ id: categoriesId })
+	        CategoriesService.delete({ id: categoriesId })
 	            .$promise.then(
 	                    function(){
 	                        $scope.categories = CategoriesService.findAll();
