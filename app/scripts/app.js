@@ -56,10 +56,18 @@ angular
         controller: 'AccountsCtrl',
         controllerAs: 'Accounts'
       })
+
+      .when('/categories', {
+        templateUrl: 'views/categories.html',
+        controller: 'CategoriesCtrl',
+        controllerAs: 'Categories'
+        })
+
       .when('/suppliers', {
         templateUrl: 'views/supplier.html',
         controller: 'SupplierCtrl',
         controllerAs: 'Supplier'
+
       })
       .otherwise({
         redirectTo: '/login'
