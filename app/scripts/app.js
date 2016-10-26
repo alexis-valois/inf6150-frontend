@@ -61,6 +61,7 @@ angular
         templateUrl: 'views/categories.html',
         controller: 'CategoriesCtrl',
         controllerAs: 'Categories'
+        })
 
       .when('/suppliers', {
         templateUrl: 'views/supplier.html',
