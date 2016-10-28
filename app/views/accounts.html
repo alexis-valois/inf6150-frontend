@@ -4,6 +4,8 @@
         <tr>
             <th style="min-width: 80px;">Nom du compte</th>
             <th style="min-width: 80px;">Type</th>
+            <th style="min-width: 80px;">Montant initial</th>
+            <th style="min-width: 80px;">Devise</th>
             <th style="width:20px;"> </th>
             <th style="width:20px;"> </th>
         </tr>
@@ -12,6 +14,8 @@
         <tr ng-repeat="account in accounts">
         	<td ng-hide="editing">{{account.accountName}}</td>
         	<td ng-hide="editing">{{account.type}}</td>
+            <td ng-hide="editing">{{account.initAmount.amount}}</td>
+            <td ng-hide="editing">{{account.initAmount.currency}}</td>
         	<td ng-hide="editing">
         		<div>
         			<a ng-click="editing = true" class="btn btn-small btn-primary btn-block">Éditer</a>
@@ -29,6 +33,12 @@
 			    <td ng-show="editing">
 				    <input type="text" ng-model="account.type" placeholder="CR"/>
 			    </td>
+                <td ng-show="editing">
+                    <input type="text" ng-model="account.initAmount.amount" placeholder="CR"/>
+                </td>
+                <td ng-show="editing">
+                    <input type="text" ng-model="account.initAmount.currency" placeholder="CR"/>
+                </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(account)">Enregistrer</button>
 			    </td>

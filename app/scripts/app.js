@@ -69,6 +69,9 @@ angular
         controllerAs: 'Supplier'
 
       })
+      .when('/userCreated', {
+        templateUrl: 'views/userCreated.html',
+      })
       .otherwise({
         redirectTo: '/login'
       });
