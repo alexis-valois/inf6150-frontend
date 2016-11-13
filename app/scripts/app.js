@@ -72,7 +72,12 @@ angular
       .when('/userCreated', {
         templateUrl: 'views/userCreated.html',
       })
-      .when('/stats', {
+      .when('/bills', {
+        templateUrl: 'views/bills.html',
+        controller: 'BillsCtrl',
+        controllerAs: 'Bills'
+      })
+	  .when('/stats', {
         templateUrl: 'views/stats.html',
         controller: 'StatsCtrl',
         controllerAs: 'Stats'

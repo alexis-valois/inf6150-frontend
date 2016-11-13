@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "montant": 12.64,
+        "userId" : 1, 
+        "categorieId" : 1, 
+        "supplierId" : 2, 
+        "date_creation": "2016-05-26",
+        "date_modification" : "2016-05-26"
+    },
+    {
+        "id": 2,
+        "montant": 1212.99,
+        "userId" : 1, 
+        "categorieId" : 2, 
+        "supplierId" : 1, 
+        "date_creation": "2016-05-26",
+        "date_modification" : "2016-05-26"
+    }
+]
