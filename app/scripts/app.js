@@ -72,6 +72,11 @@ angular
       .when('/userCreated', {
         templateUrl: 'views/userCreated.html',
       })
+      .when('/bills', {
+        templateUrl: 'views/bills.html',
+        controller: 'BillsCtrl',
+        controllerAs: 'Bills'
+      })
       .otherwise({
         redirectTo: '/login'
       });
