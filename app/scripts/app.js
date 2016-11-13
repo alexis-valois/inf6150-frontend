@@ -77,6 +77,11 @@ angular
         controller: 'BillsCtrl',
         controllerAs: 'Bills'
       })
+	  .when('/stats', {
+        templateUrl: 'views/stats.html',
+        controller: 'StatsCtrl',
+        controllerAs: 'Stats'
+      })
       .otherwise({
         redirectTo: '/login'
       });
