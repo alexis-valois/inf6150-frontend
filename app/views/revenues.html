@@ -1,0 +1,63 @@
+<div ng-controller="RevenuesCtrl" class="span6">
+<table class="table table-striped table-condensed table-hover">
+        <thead>
+        <tr>
+            <th style="min-width: 80px;">Nom du compte</th>
+            <th style="min-width: 80px;">Fréquence</th>
+            <th style="min-width: 80px;">Montant initial</th>
+            <th style="min-width: 80px;">Devise</th>
+            <th style="width:20px;">Date de début</th>
+            <th style="width:20px;">Date de fin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="revenue in revenues">
+        	<td ng-hide="editing">{{revenue.accounts[0].accountName}}</td>
+        	<td ng-hide="editing">{{revenue.frequency}}</td>
+            <td ng-hide="editing">{{revenue.amount.amount}}</td>
+            <td ng-hide="editing">{{revenue.amount.currency}}</td>
+            <td ng-hide="editing">{{revenue.revStarting | date : 'dd-MMMM-yyyy' }}</td>
+            <td ng-hide="editing">{{revenue.revEnding | date : 'dd-MMMM-yyyy' }}</td>
+        	<td ng-hide="editing">
+        		<div>
+        			<a ng-click="editing = true" class="btn btn-small btn-primary btn-block">Éditer</a>
+        		</div>
+        	</td>
+		    <td ng-hide="editing">
+		    	<div>
+		    		<a ng-click="deleteRevenue(revenue.id)" class="btn btn-small btn-danger btn-block">Supprimer</a>
+		    	</div>
+		    </td> 
+			<form>
+				<td ng-show="editing">
+				    <select ng-model="selectedAccount" ng-change="selectAccount(selectedAccount)">
+				        <option ng-repeat="account in accounts" value="{{account}}">{{account.accountName}}</option>
+				    </select>
+			    </td>
+			    <td ng-show="editing">
+				    <input type="text" ng-model="revenue.frequency" placeholder="Fréquence"/>
+			    </td>
+                <td ng-show="editing">
+                    <input type="text" ng-model="revenue.amount.amount" placeholder="Montant Initial"/>
+                </td>
+                <td ng-show="editing">
+                    <input type="text" ng-model="revenue.amount.currency" placeholder="Devise"/>
+                </td>
+                <td ng-show="editing">
+                    <input type="date" ng-model="revenue.revStarting" placeholder="Date de début" />
+                </td>
+                <td ng-show="editing">
+                    <input type="date" ng-model="revenue.revEnding" placeholder="Date de fin"/>
+                </td>
+			    <td ng-show="editing">
+			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(revenue)">Enregistrer</button>
+			    </td>
+			    <td ng-show="editing">
+			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
+			    </td>
+			</form>       	            
+        </tr>
+        </tbody>
+    </table>
+    <a ng-click="addEmptyRevenue()" class="btn btn-small">Ajouter un nouveau Revenue</a>
+</div>

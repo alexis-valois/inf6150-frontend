@@ -138,7 +138,7 @@ function mockResult (id){
 					"amount": 566.99,
 					"date_creation": "2016-11-26"
 				} 
-			]
+			];
 			
 	if(id === -1){
 		return res.concat(res2);
@@ -156,11 +156,11 @@ angular.module('inf6150FrontendApp')
   .controller('StatsCtrl', ['$scope', '$route', 'SuppliersServices', 'CategoriesService', 'AccountService' , 
   function ($scope, $route,SuppliersServices, CategoriesService, AccountService) {
     
-		self = this
+		var self = this;
 		
 		//Fonction qui permet de créer un graphique
 		$scope.aff12DernierMois = function(account){
-			var date = new Date();			
+			//var date = new Date();			
 			var dateAnneePasser = new Date();
 			var axeX = [];
 			var data = [0,0,0,0,0,0,0,0,0,0,0,0];
@@ -188,7 +188,7 @@ angular.module('inf6150FrontendApp')
 			}
 			
 			//Somme des valeur pour chaque mois en ordre.
-			for(var i=0; i<result.length; i++){
+			for(i=0; i<result.length; i++){
 				var dateTmp = new Date(result[i].date_creation);
 				var posTmp = mod((dateTmp.getMonth() - premierMois),12);
 				data[posTmp] = Number((data[posTmp] + result[i].amount).toFixed(2));
@@ -198,7 +198,7 @@ angular.module('inf6150FrontendApp')
 			self.creerGraph(axeX, data);
 			self.creerTab(result);
 			
-		}
+		};
 		
 		self.creerGraph = function(axeX, data){
 			$('#graph1').highcharts({
@@ -229,7 +229,7 @@ angular.module('inf6150FrontendApp')
 					name: "Montants totals depensés"
 				}]
 			});
-		}
+		};
 		
 		self.creerTab = function(data){
 			if(self.table){
@@ -250,7 +250,7 @@ angular.module('inf6150FrontendApp')
 					}
 				]
 			});	
-		}
+		};
 		
 		AccountService.findAll({}, function(data){
 			$scope.listeAccount = data;
