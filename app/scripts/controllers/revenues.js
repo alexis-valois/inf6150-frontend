@@ -12,19 +12,35 @@ angular.module('inf6150FrontendApp')
   	function ($scope, RevenuesService, AccountService) {
 	    
 	    $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
+
 	    $scope.accounts = AccountService.findAll();
+
+	    $scope.selectedAccount = {};
+
+	    $scope.selectAccount = function(account){
+	    	$scope.selectedAccount = JSON.parse(account);
+	    };
 
   		$scope.addEmptyRevenue = function(){
   			$scope.revenues.push({});
   		};
 
   		$scope.createOrUpdate = function(revenue){
-  			revenue.accountId = revenue.accounts[0].accountId;
-  			console.log(revenue.accountId);
+  			revenue.accountId = $scope.selectedAccount.id;
   			if (revenue.id){
-  				RevenuesService.update({ id: revenue.id }, revenue);
+  				RevenuesService.update({ id: revenue.id }, revenue)
+	  				.$promise.then(
+		                    function(){
+		                        $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
+		                    }
+		                );
   			}else{
-  				RevenuesService.create(revenue);
+  				RevenuesService.create(revenue)
+	  				.$promise.then(
+		                    function(){
+		                        $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
+		                    }
+		                );
   			}  			
   		};
 
@@ -32,7 +48,7 @@ angular.module('inf6150FrontendApp')
 	        RevenuesService.delete({ id: revenueId })
 	            .$promise.then(
 	                    function(){
-	                        $scope.revenues = RevenuesService.findAll();
+	                        $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
 	                    }
 	                );
 	    };

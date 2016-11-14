@@ -30,8 +30,8 @@
 		    </td> 
 			<form>
 				<td ng-show="editing">
-				    <select ng-model="revenue.accounts[0]">
-				    	<option ng-repeat="account in accounts track by account.id" ng-value="account">{{account.accountName}}</option>
+				    <select ng-model="selectedAccount" ng-change="selectAccount(selectedAccount)">
+				        <option ng-repeat="account in accounts" value="{{account}}">{{account.accountName}}</option>
 				    </select>
 			    </td>
 			    <td ng-show="editing">
