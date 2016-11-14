@@ -62,7 +62,6 @@ angular
         controller: 'CategoriesCtrl',
         controllerAs: 'Categories'
         })
-
       .when('/suppliers', {
         templateUrl: 'views/supplier.html',
         controller: 'SupplierCtrl',
@@ -81,6 +80,11 @@ angular
         templateUrl: 'views/stats.html',
         controller: 'StatsCtrl',
         controllerAs: 'Stats'
+      })
+      .when('/revenues', {
+        templateUrl: 'views/revenues.html',
+        controller: 'RevenuesCtrl',
+        controllerAs: 'Revenues'
       })
       .otherwise({
         redirectTo: '/login'
