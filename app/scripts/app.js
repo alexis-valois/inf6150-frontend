@@ -95,7 +95,6 @@ angular
   })
   .run(function($rootScope, $http, $location, localStorageService, EnumsService) {
      $rootScope.logout = function() {
-      console.log('logout test');
       $http.post('http://localhost:8081/user/logout', {})
         .success(function() {         
             $location.path('/');
@@ -103,7 +102,6 @@ angular
         })
         .error(function() {
             $rootScope.error = true;
-            console.log('logout error');
         });
         localStorageService.set('user', null);
         localStorageService.set('authenticated', false);

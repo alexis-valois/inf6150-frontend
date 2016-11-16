@@ -8,14 +8,15 @@
  * Controller of the inf6150FrontendApp
  */
 angular.module('inf6150FrontendApp')
-  .controller('AccountsCtrl', ['$rootScope','$scope', 'AccountService', 'EnumsService',
-  	function ($rootScope, $scope, AccountService, EnumsService) {
+  .controller('AccountsCtrl', ['$scope', 'AccountService',
+  	function ($scope, AccountService) {
 
-  		$scope.accounts = AccountService.findAll();
-
-      $scope.selectedAccountType = {};
-
-      $scope.selectedCurrency = {};
+  		AccountService.findAll().$promise.then(function(data){
+            $scope.selectedAccountType = data[0].type;
+            $scope.selectedCurrency = data[0].initAmount.currency;
+            $scope.accounts = data;
+          }    
+      );
 
       $scope.selectAccountType = function(type){
         $scope.selectedAccountType = type;

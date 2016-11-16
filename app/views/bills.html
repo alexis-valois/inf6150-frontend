@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="bill in bills">
-            <td ng-hide="editing">{{bill.montant}}</td>
+            <td ng-hide="editing">{{bill.montant | currency}}</td>
             <td ng-hide="editing">{{bill.categories[0].name}}</td>
             <td ng-hide="editing">{{bill.suppliers[0].supplierName}}</td>
             <td ng-hide="editing">{{bill.accounts[0].accountName}}</td>

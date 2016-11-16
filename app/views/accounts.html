@@ -2,10 +2,10 @@
     <table class="table table-striped table-condensed table-hover">
         <thead>
         <tr>
-            <th style="min-width: 80px;">Nom du compte</th>
-            <th style="min-width: 80px;">Type</th>
-            <th style="min-width: 80px;">Montant initial</th>
-            <th style="min-width: 80px;">Devise</th>
+            <th style="min-width: 100px;">Nom du compte</th>
+            <th style="min-width: 100px;">Type</th>
+            <th style="min-width: 100px;">Montant initial</th>
+            <th style="min-width: 100px;">Devise</th>
             <th style="width:20px;"> </th>
             <th style="width:20px;"> </th>
         </tr>
@@ -14,7 +14,7 @@
         <tr ng-repeat="account in accounts">
         	<td ng-hide="editing">{{account.accountName}}</td>
         	<td ng-hide="editing">{{account.type}}</td>
-            <td ng-hide="editing">{{account.initAmount.amount}}</td>
+            <td ng-hide="editing">{{account.initAmount.amount | currency}}</td>
             <td ng-hide="editing">{{account.initAmount.currency}}</td>
         	<td ng-hide="editing">
         		<div>
@@ -26,20 +26,20 @@
 		    		<a ng-click="deleteAccount(account.id)" class="btn btn-small btn-danger btn-block">Supprimer</a>
 		    	</div>
 		    </td> 
-			<form>
+
 				<td ng-show="editing">
-				    <input type="text" ng-model="account.accountName" placeholder="Nom"/>
+				    <input class="form-control" type="text" ng-model="account.accountName" placeholder="Nom"/>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="selectedAccountType" ng-change="selectAccountType(selectedAccountType)">
+				    <select ng-model="selectedAccountType" ng-change="selectAccountType(selectedAccountType)" class="form-control">
                         <option ng-selected="account.type == type.value" ng-repeat="type in accountTypes" value="{{type.value}}">{{type.value}}</option>
                     </select>
 			    </td>
                 <td ng-show="editing">
-                    <input type="text" ng-model="account.initAmount.amount" placeholder="CR"/>
+                    <input class="form-control" type="text" ng-model="account.initAmount.amount" placeholder="Montant"/>
                 </td>
                 <td ng-show="editing">
-                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)">
+                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)" class="form-control">
                         <option ng-selected="account.initAmount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
                     </select>
                 </td>
@@ -49,7 +49,7 @@
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-danger btn-block" ng-click="editing = false">Annuler</button>
 			    </td>
-			</form>       	            
+      	            
         </tr>
         </tbody>
     </table>
