@@ -31,13 +31,17 @@
 				    <input type="text" ng-model="account.accountName" placeholder="Nom"/>
 			    </td>
 			    <td ng-show="editing">
-				    <input type="text" ng-model="account.type" placeholder="CR"/>
+				    <select ng-model="selectedAccountType" ng-change="selectAccountType(selectedAccountType)">
+                        <option ng-selected="account.type == type.value" ng-repeat="type in accountTypes" value="{{type.value}}">{{type.value}}</option>
+                    </select>
 			    </td>
                 <td ng-show="editing">
                     <input type="text" ng-model="account.initAmount.amount" placeholder="CR"/>
                 </td>
                 <td ng-show="editing">
-                    <input type="text" ng-model="account.initAmount.currency" placeholder="CR"/>
+                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)">
+                        <option ng-selected="account.initAmount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
+                    </select>
                 </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(account)">Enregistrer</button>

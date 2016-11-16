@@ -17,6 +17,18 @@ angular.module('inf6150FrontendApp')
 
 	    $scope.selectedAccount = {};
 
+	    $scope.selectedCurrency = {};
+
+	    $scope.selectedFrequency = {};
+
+	    $scope.selectFrequency = function(frequency){
+	        $scope.selectedFrequency = frequency;
+	    };
+
+	    $scope.selectCurrency = function(currency){
+	        $scope.selectedCurrency = currency;
+	    };
+
 	    $scope.selectAccount = function(account){
 	    	$scope.selectedAccount = JSON.parse(account);
 	    };
@@ -27,6 +39,8 @@ angular.module('inf6150FrontendApp')
 
   		$scope.createOrUpdate = function(revenue){
   			revenue.accountId = $scope.selectedAccount.id;
+  			revenue.amount.currency = $scope.selectedCurrency;
+  			revenue.frequency = $scope.selectedFrequency; 
   			if (revenue.id){
   				RevenuesService.update({ id: revenue.id }, revenue)
 	  				.$promise.then(

@@ -93,7 +93,7 @@ angular
       $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     
   })
-  .run(function($rootScope, $http, $location, localStorageService) {
+  .run(function($rootScope, $http, $location, localStorageService, EnumsService) {
      $rootScope.logout = function() {
       console.log('logout test');
       $http.post('http://localhost:8081/user/logout', {})
@@ -117,11 +117,22 @@ angular
         $rootScope.error = false;
         if ($rootScope.user !== null){
           $http.defaults.headers.common.sessionToken = localStorageService.get('user').sessionToken;
+          if (!$rootScope.accountTypes){
+            $rootScope.accountTypes = EnumsService.findAll({filterBy: 'enum_key;eq;ACCOUNT_TYPE'});
+          }
+
+          if (!$rootScope.revenueFrequencies){
+             $rootScope.revenueFrequencies = EnumsService.findAll({filterBy: 'enum_key;eq;REVENUE_FREQUENCY'});
+          }
+
+          if (!$rootScope.currencies){
+            $rootScope.currencies = EnumsService.findAll({filterBy: 'enum_key;eq;CURRENCY'});
+          }         
+         
         }
         if ($rootScope.loggedOut){
           $rootScope.loggedOut = false;
         }        
     });
-	
 	
   });

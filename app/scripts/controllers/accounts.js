@@ -8,17 +8,31 @@
  * Controller of the inf6150FrontendApp
  */
 angular.module('inf6150FrontendApp')
-  .controller('AccountsCtrl', ['$scope', 'AccountService', 
-  	function ($scope, AccountService) {
+  .controller('AccountsCtrl', ['$rootScope','$scope', 'AccountService', 'EnumsService',
+  	function ($rootScope, $scope, AccountService, EnumsService) {
 
   		$scope.accounts = AccountService.findAll();
+
+      $scope.selectedAccountType = {};
+
+      $scope.selectedCurrency = {};
+
+      $scope.selectAccountType = function(type){
+        $scope.selectedAccountType = type;
+      };
+
+      $scope.selectCurrency = function(currency){
+        $scope.selectedCurrency = currency;
+      };
 
   		$scope.addEmptyAccount = function(){
   			$scope.accounts.push({});
   		};
 
   		$scope.createOrUpdate = function(account){
-  			if (account.id){
+  			account.type = $scope.selectedAccountType;
+        account.initAmount.currency = $scope.selectedCurrency;
+        if (account.id){
   				AccountService.update({ id: account.id }, account);
   			}else{
   				AccountService.create(account);

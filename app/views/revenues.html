@@ -31,17 +31,21 @@
 			<form>
 				<td ng-show="editing">
 				    <select ng-model="selectedAccount" ng-change="selectAccount(selectedAccount)">
-				        <option ng-repeat="account in accounts" value="{{account}}">{{account.accountName}}</option>
+				        <option ng-selected="revenue.accounts[0].accountName == account.accountName" ng-repeat="account in accounts" value="{{account}}">{{account.accountName}}</option>
 				    </select>
 			    </td>
 			    <td ng-show="editing">
-				    <input type="text" ng-model="revenue.frequency" placeholder="Fréquence"/>
+				    <select ng-model="selectedFrequency" ng-change="selectFrequency(selectedFrequency)">
+                        <option ng-selected="revenue.frequency == frequency.value" ng-repeat="frequency in revenueFrequencies" value="{{frequency.value}}">{{frequency.value}}</option>
+                    </select>
 			    </td>
                 <td ng-show="editing">
                     <input type="text" ng-model="revenue.amount.amount" placeholder="Montant Initial"/>
                 </td>
                 <td ng-show="editing">
-                    <input type="text" ng-model="revenue.amount.currency" placeholder="Devise"/>
+                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)">
+                        <option ng-selected="revenue.amount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
+                    </select>
                 </td>
                 <td ng-show="editing">
                     <input type="date" ng-model="revenue.revStarting" placeholder="Date de début" />
