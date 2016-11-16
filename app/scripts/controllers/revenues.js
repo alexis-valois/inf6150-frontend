@@ -11,14 +11,27 @@ angular.module('inf6150FrontendApp')
   .controller('RevenuesCtrl', ['$scope', 'RevenuesService', 'AccountService',
   	function ($scope, RevenuesService, AccountService) {
 	    
-	    $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
+	    RevenuesService.findAll({subEntity:'accounts;accountId'}).$promise.then(function(data){
+	    	$scope.revenues = data;
+	    	$scope.selectedFrequency = data[0].frequency;
+	    });
 
-	    $scope.accounts = AccountService.findAll();
+	    AccountService.findAll().$promise.then(function(data){
+	    	$scope.selectedAccount = data[0].id;
+	    	$scope.accounts = data;
+	    	$scope.selectedCurrency = data[0].initAmount.currency;
+	    });    
 
-	    $scope.selectedAccount = {};
+	    $scope.selectFrequency = function(frequency){
+	        $scope.selectedFrequency = frequency;
+	    };
 
-	    $scope.selectAccount = function(account){
-	    	$scope.selectedAccount = JSON.parse(account);
+	    $scope.selectCurrency = function(currency){
+	        $scope.selectedCurrency = currency;
+	    };
+
+	    $scope.selectAccount = function(accountId){
+	    	$scope.selectedAccount = accountId;
 	    };
 
   		$scope.addEmptyRevenue = function(){
@@ -26,7 +39,9 @@ angular.module('inf6150FrontendApp')
   		};
 
   		$scope.createOrUpdate = function(revenue){
-  			revenue.accountId = $scope.selectedAccount.id;
+  			revenue.accountId = $scope.selectedAccount;
+  			revenue.amount.currency = $scope.selectedCurrency;
+  			revenue.frequency = $scope.selectedFrequency; 
   			if (revenue.id){
   				RevenuesService.update({ id: revenue.id }, revenue)
 	  				.$promise.then(
