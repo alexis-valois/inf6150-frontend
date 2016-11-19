@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th style="min-width: 80px;">Montant de la facture</th>
+            <th style="min-width: 80px;">Devise</th>
             <th style="min-width: 80px;">Cat&eacute;gorie</th>
             <th style="min-width: 80px;">Fournisseur</th>
             <th style="min-width: 80px;">Compte</th>
@@ -13,7 +14,8 @@
         </thead>
         <tbody>
         <tr ng-repeat="bill in bills">
-            <td ng-hide="editing">{{bill.montant | currency}}</td>
+            <td ng-hide="editing">{{bill.amount.amount | currency}}</td>
+            <td ng-hide="editing">{{bill.amount.currency}}</td>
             <td ng-hide="editing">{{bill.categories[0].name}}</td>
             <td ng-hide="editing">{{bill.suppliers[0].supplierName}}</td>
             <td ng-hide="editing">{{bill.accounts[0].accountName}}</td>
@@ -29,21 +31,26 @@
 		    </td>
 			<form>
 				<td ng-show="editing">
-				    <input type="text" class="form-control" ng-model="bill.montant" placeholder="Montant"/>
+				    <input type="text" class="form-control" ng-model="bill.amount.amount" placeholder="Montant"/>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="bill.categorieId" class="form-control">
-				    	<option ng-repeat="categorie in categories" value="{{categorie.id}}">{{categorie.name}}</option>
+                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)" class="form-control">
+                        <option ng-selected="bill.amount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
+                    </select>
+                </td>
+			    <td ng-show="editing">
+				    <select ng-model="selectedCategorie" ng-change="selectCategorie(selectedCategorie)" class="form-control">
+				    	<option ng-selected="bill.categories[0].id == categorie.id" ng-repeat="categorie in categories" value="{{categorie.id}}">{{categorie.name}}</option>
 				    </select>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="bill.supplierId" class="form-control">
-				    	<option ng-repeat="supplier in suppliers" value="{{supplier.id}}">{{supplier.supplierName}}</option>
+				    <select ng-model="selectedSupplier" ng-change="selectSupplier(selectedSupplier)" class="form-control">
+				    	<option ng-selected="bill.suppliers[0].id == supplier.id" ng-repeat="supplier in suppliers" value="{{supplier.id}}">{{supplier.supplierName}}</option>
 				    </select>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="bill.accountId" class="form-control">
-				    	<option ng-repeat="account in accounts" value="{{account.id}}">{{account.accountName}}</option>
+				    <select ng-model="selectedAccount" ng-change="selectAccount(selectedAccount)" class="form-control">
+				    	<option ng-selected="bill.accounts[0].id == account.id" ng-repeat="account in accounts" value="{{account.id}}">{{account.accountName}}</option>
 				    </select>
 			    </td>
 			    <td ng-show="editing">

@@ -9,10 +9,11 @@
  */
 angular.module('inf6150FrontendApp')
   .service('BillsServices', function ($resource) {
-  	return $resource('scripts/bills.json', {}, {
-  		create: { methode: 'POST', isArray: true },
-  		findAll: { methode: 'GET', isArray: true },
-  		update: { methode: 'PUT', isArray: true, params: {id: '@id'} },
+  	return $resource('http://localhost:8081/rest/entity/bills/:id', {}, {
+  		create: { method: 'POST' },
+  		findAll: { method: 'GET', isArray: true, params: {subEntity: ['accounts;accountId', 'suppliers;supplierId', 'categories;categorieId']} },
+  		findOne: { method: 'GET', params: {id: '@id'} },
+  		update: { method: 'PUT', params: {id: '@id'} },
   		delete: { method: 'DELETE', params: {id: '@id'} }
   	});
   });
