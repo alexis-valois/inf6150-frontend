@@ -4,6 +4,7 @@
         <tr>
             <th style="min-width: 80px;">Montant de la facture</th>
             <th style="min-width: 80px;">Devise</th>
+            <th style="min-width: 80px;">Date</th>
             <th style="min-width: 80px;">Cat&eacute;gorie</th>
             <th style="min-width: 80px;">Fournisseur</th>
             <th style="min-width: 80px;">Compte</th>
@@ -16,6 +17,7 @@
         <tr ng-repeat="bill in bills">
             <td ng-hide="editing">{{bill.amount.amount | currency}}</td>
             <td ng-hide="editing">{{bill.amount.currency}}</td>
+            <td ng-hide="editing">{{bill.billDate | date : 'dd-MM-yyyy'}}</td>
             <td ng-hide="editing">{{bill.categories[0].name}}</td>
             <td ng-hide="editing">{{bill.suppliers[0].supplierName}}</td>
             <td ng-hide="editing">{{bill.accounts[0].accountName}}</td>
@@ -38,6 +40,9 @@
                         <option ng-selected="bill.amount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
                     </select>
                 </td>
+                <td ng-show="editing">
+				    <input type="date" class="form-control" ng-model="bill.billDate"/>
+			    </td>
 			    <td ng-show="editing">
 				    <select ng-model="selectedCategorie" ng-change="selectCategorie(selectedCategorie)" class="form-control">
 				    	<option ng-selected="bill.categories[0].id == categorie.id" ng-repeat="categorie in categories" value="{{categorie.id}}">{{categorie.name}}</option>
