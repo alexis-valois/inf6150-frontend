@@ -23,7 +23,7 @@
             <td ng-hide="editing">{{bill.accounts[0].accountName}}</td>
         	<td ng-hide="editing">
         		<div>
-        			<a ng-click="editing = true" class="btn btn-small btn-primary btn-block">Éditer</a>
+        			<a ng-click="editing = true; editer(bill);" class="btn btn-small btn-primary btn-block">Éditer</a>
         		</div>
         	</td>
 		    <td ng-hide="editing">
@@ -36,27 +36,27 @@
 				    <input type="text" class="form-control" ng-model="bill.amount.amount" placeholder="Montant"/>
 			    </td>
 			    <td ng-show="editing">
-                    <select ng-model="selectedCurrency" ng-change="selectCurrency(selectedCurrency)" class="form-control">
-                        <option ng-selected="bill.amount.currency == currency.value" ng-repeat="currency in currencies" value="{{currency.value}}">{{currency.value}}</option>
-                    </select>
+					<select class="form-control" ng-model="selectedCurrency"
+						ng-options="currency.value as currency.value for currency in currencies">
+					</select>
                 </td>
                 <td ng-show="editing">
-				    <input type="date" class="form-control" ng-model="bill.billDate"/>
+				    <input type="date" class="form-control" ng-model="dateBill"/>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="selectedCategorie" ng-change="selectCategorie(selectedCategorie)" class="form-control">
-				    	<option ng-selected="bill.categories[0].id == categorie.id" ng-repeat="categorie in categories" value="{{categorie.id}}">{{categorie.name}}</option>
-				    </select>
+					<select class="form-control" ng-model="selectedCategorie"
+						ng-options="categorie.id as categorie.name for categorie in categories">
+					</select>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="selectedSupplier" ng-change="selectSupplier(selectedSupplier)" class="form-control">
-				    	<option ng-selected="bill.suppliers[0].id == supplier.id" ng-repeat="supplier in suppliers" value="{{supplier.id}}">{{supplier.supplierName}}</option>
-				    </select>
+					<select class="form-control" ng-model="selectedSupplier"
+						ng-options="supplier.id as supplier.supplierName for supplier in suppliers">
+					</select>
 			    </td>
 			    <td ng-show="editing">
-				    <select ng-model="selectedAccount" ng-change="selectAccount(selectedAccount)" class="form-control">
-				    	<option ng-selected="bill.accounts[0].id == account.id" ng-repeat="account in accounts" value="{{account.id}}">{{account.accountName}}</option>
-				    </select>
+					<select class="form-control" ng-model="selectedAccount"
+						ng-options="account.id as account.accountName for account in accounts">
+					</select>
 			    </td>
 			    <td ng-show="editing">
 			    	<button class="btn btn-small btn-primary btn-block" ng-click="editing = false; createOrUpdate(bill)">Enregistrer</button>

@@ -11,7 +11,7 @@ angular.module('inf6150FrontendApp')
   .controller('BillsCtrl', ['$scope', 'BillsServices', 'CategoriesService', 'SuppliersServices', 'AccountService',
   	function ($scope, BillsServices, CategoriesService, SuppliersServices, AccountService) {
     	
-    	BillsServices.findAll().$promise.then(function(data){
+    BillsServices.findAll().$promise.then(function(data){
         $scope.bills = data;
       });    
 
@@ -47,32 +47,41 @@ angular.module('inf6150FrontendApp')
           $scope.selectedCurrency = currency;
       };
 
-    	$scope.addEmptyBill = function(){
-  			$scope.bills.push({});
-  		};
+    $scope.addEmptyBill = function(){
+  		$scope.bills.push({});
+  	};
 
-  		$scope.createOrUpdate = function(bill){
-        bill.accountId = $scope.selectedAccount;
-        bill.categorieId = $scope.selectedCategorie;
-        bill.supplierId = $scope.selectedSupplier;
-        bill.amount.currency = $scope.selectedCurrency;
+	$scope.editer = function(bill){
+		console.log(bill);
+		this.editing = true;
+		this.selectedAccount = bill.accounts[0].id;
+		this.selectedSupplier = bill.suppliers[0].id;
+		this.selectedCategorie = bill.categories[0].id;
+		this.selectedCurrency = bill.amount.currency;
+		this.dateBill = new Date(bill.billDate);
+	}
+	
+  	$scope.createOrUpdate = function(bill){
+        bill.accountId = this.selectedAccount;
+        bill.categorieId = this.selectedCategorie;
+        bill.supplierId = this.selectedSupplier;
+        bill.amount.currency = this.selectedCurrency;
+		bill.billDate = this.dateBill;
         
-  			if (bill.id){
-  				BillsServices.update({ id: bill.id }, bill)
-              .$promise.then(
-                        function(){
-                            $scope.bills = BillsServices.findAll();
-                        }
-                    );
-  			}else{
-  				BillsServices.create(bill)
-              .$promise.then(
-                        function(){
-                            $scope.bills = BillsServices.findAll();
-                        }
-                    );
-  			}  			
-  		};
+  		if (bill.id){
+  			BillsServices.update({ id: bill.id }, bill).$promise.then(
+                function(){
+					$scope.bills = BillsServices.findAll();
+                }
+            );
+		}else{
+			BillsServices.create(bill).$promise.then(
+                function(){
+                    $scope.bills = BillsServices.findAll();
+                }
+            );
+		}  			
+  	};
 
   		$scope.deleteBills = function(billId) {
 	        BillsServices.delete({ id: billId })
