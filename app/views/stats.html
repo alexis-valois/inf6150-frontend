@@ -1,11 +1,9 @@
 <div ng-controller="StatsCtrl">
-	<div class="row">
 		<div ng-repeat="account in listeAccount" class="btn-group" role="group" style="padding-bottom:15px;">
 			<button ng-click="aff12DernierMois(account);" ng-class="{active : idChoisie === account.id}" type="button" class="btn btn-default">{{account.accountName}}</button>
 		</div>
 		<div id="graph1"></div>
 		<table class="display" id="tab1"></table >
-	</div>
 	
 	
 </div>
