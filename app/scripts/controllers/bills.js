@@ -52,7 +52,6 @@ angular.module('inf6150FrontendApp')
   	};
 
 	$scope.editer = function(bill){
-		console.log(bill);
 		this.editing = true;
 		this.selectedAccount = bill.accounts[0].id;
 		this.selectedSupplier = bill.suppliers[0].id;
