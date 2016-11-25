@@ -12,8 +12,10 @@ angular.module('inf6150FrontendApp')
   	function ($scope, RevenuesService, AccountService) {
 	    
 	    RevenuesService.findAll({subEntity:'accounts;accountId'}).$promise.then(function(data){
-	    	$scope.revenues = data;
-	    	$scope.selectedFrequency = data[0].frequency;
+	    	if (data && data[0]){
+	    		$scope.revenues = data;
+	    		$scope.selectedFrequency = data[0].frequency;
+	    	}	    	
 	    });
 
 	    AccountService.findAll().$promise.then(function(data){
@@ -35,6 +37,9 @@ angular.module('inf6150FrontendApp')
 	    };
 
   		$scope.addEmptyRevenue = function(){
+  			if (!$scope.revenues){
+  				$scope.revenues = [];
+  			}
   			$scope.revenues.push({});
   		};
 
