@@ -12,9 +12,11 @@ angular.module('inf6150FrontendApp')
   	function ($scope, AccountService) {
 
   		AccountService.findAll().$promise.then(function(data){
-            $scope.selectedAccountType = data[0].type;
-            $scope.selectedCurrency = data[0].initAmount.currency;
-            $scope.accounts = data;
+            if (data && data[0]){
+              $scope.selectedAccountType = data[0].type;
+              $scope.selectedCurrency = data[0].initAmount.currency;
+              $scope.accounts = data;
+            }            
           }    
       );
 
@@ -27,7 +29,10 @@ angular.module('inf6150FrontendApp')
       };
 
   		$scope.addEmptyAccount = function(){
-  			$scope.accounts.push({});
+  			if (!$scope.accounts){
+          $scope.accounts = [];
+        }
+        $scope.accounts.push({});
   		};
 
   		$scope.createOrUpdate = function(account){

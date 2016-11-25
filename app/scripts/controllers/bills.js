@@ -53,11 +53,13 @@ angular.module('inf6150FrontendApp')
 
 	$scope.editer = function(bill){
 		this.editing = true;
-		this.selectedAccount = bill.accounts[0].id;
-		this.selectedSupplier = bill.suppliers[0].id;
-		this.selectedCategorie = bill.categories[0].id;
-		this.selectedCurrency = bill.amount.currency;
-		this.dateBill = new Date(bill.billDate);
+    if (bill.accounts && bill.accounts[0]){
+      this.selectedAccount = bill.accounts[0].id;
+      this.selectedSupplier = bill.suppliers[0].id;
+      this.selectedCategorie = bill.categories[0].id;
+      this.selectedCurrency = bill.amount.currency;
+      this.dateBill = new Date(bill.billDate);
+    }		
 	}
 	
   	$scope.createOrUpdate = function(bill){
