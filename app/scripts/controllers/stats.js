@@ -13,203 +13,290 @@
         return ((n % m) + m) % m;
 }
  
-function mockResult (id){
-	var res = [
-				{
-					"id": 1,
-					"amount": 12.64,
-					"date_creation": "2015-12-26"
-				},
-				{
-					"id": 2,
-					"amount": 1212.99,
-					"date_creation": "2015-12-26"
-				},
-				{
-					"id": 2,
-					"amount": 400.99,
-					"date_creation": "2016-01-26"
-				},
-				{
-					"id": 2,
-					"amount": 150.00,
-					"date_creation": "2016-02-26"
-				},
-				{
-					"id": 2,
-					"amount": 2500.00,
-					"date_creation": "2016-03-26"
-				},
-				{
-					"id": 2,
-					"amount": 111.99,
-					"date_creation": "2016-05-26"
-				},
-				{
-					"id": 2,
-					"amount": 333.99,
-					"date_creation": "2016-06-26"
-				},
-				{
-					"id": 2,
-					"amount": 999.99,
-					"date_creation": "2016-07-26"
-				},
-				{
-					"id": 2,
-					"amount": 1001.99,
-					"date_creation": "2016-08-26"
-				},
-				{
-					"id": 2,
-					"amount": 275.99,
-					"date_creation": "2016-09-26"
-				},
-				{
-					"id": 2,
-					"amount": 666.99,
-					"date_creation": "2016-10-26"
-				},
-				{
-					"id": 2,
-					"amount": 566.99,
-					"date_creation": "2016-11-26"
-				} 
-			];
-			
-	var res2 = [
-				{
-					"id": 1,
-					"amount": 1222.64,
-					"date_creation": "2016-4-26"
-				},
-				{
-					"id": 2,
-					"amount": 112.99,
-					"date_creation": "2015-12-26"
-				},
-				{
-					"id": 2,
-					"amount": 400.99,
-					"date_creation": "2016-01-26"
-				},
-				{
-					"id": 2,
-					"amount": 120.00,
-					"date_creation": "2016-02-26"
-				},
-				{
-					"id": 2,
-					"amount": 200.00,
-					"date_creation": "2016-03-26"
-				},
-				{
-					"id": 2,
-					"amount": 7771.99,
-					"date_creation": "2016-05-26"
-				},
-				{
-					"id": 2,
-					"amount": 20.99,
-					"date_creation": "2016-06-26"
-				},
-				{
-					"id": 2,
-					"amount": 999.99,
-					"date_creation": "2016-07-26"
-				},
-				{
-					"id": 2,
-					"amount": 1001.99,
-					"date_creation": "2016-08-26"
-				},
-				{
-					"id": 2,
-					"amount": 275.99,
-					"date_creation": "2016-09-26"
-				},
-				{
-					"id": 2,
-					"amount": 366.99,
-					"date_creation": "2016-10-26"
-				},
-				{
-					"id": 2,
-					"amount": 566.99,
-					"date_creation": "2016-11-26"
-				} 
-			];
-			
-	if(id === -1){
-		return res.concat(res2);
-	}else if(id === 9){
-		return res;
+function parseDateToString(date, estAffichee){
+	if(!estAffichee){
+		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+	}else{
+		var jourD = '' + date.getDate()
+		var moisD = '' + (date.getMonth() + 1);
+		if (moisD.length < 2) moisD = '0' + moisD;
+		if (jourD.length < 2) jourD = '0' + jourD;
+
+		return date.getFullYear() + '-' + moisD + '-' + jourD;
 	}
-	
-	return res2;
-}
- 
- 
+} 
  //Suppliers service permet obtenir les fourniseur
  //
 angular.module('inf6150FrontendApp')
-  .controller('StatsCtrl', ['$scope', '$route', 'SuppliersServices', 'CategoriesService', 'AccountService' , 
-  function ($scope, $route,SuppliersServices, CategoriesService, AccountService) {
+  .controller('StatsCtrl', ['$scope', '$route', 'AccountService' , 'RevenuesService', 'BillsServices',
+  function ($scope, $route, AccountService, RevenuesService, BillsServices) {
     
 		var self = this;
 		
-		//Fonction qui permet de créer un graphique
-		$scope.aff12DernierMois = function(account){
-			//var date = new Date();			
-			var dateAnneePasser = new Date();
-			var axeX = [];
-			var data = [0,0,0,0,0,0,0,0,0,0,0,0];
-			dateAnneePasser.setFullYear(dateAnneePasser.getFullYear()-1);
-			dateAnneePasser.setMonth(dateAnneePasser.getMonth() + 1);
-			var premierMois = dateAnneePasser.getMonth();
+		//Fonction qui permet le rapport
+		$scope.affEntreDeuxMois = function(){	
+		
+			var sincronisation = false;
+			$scope.depenseTrouver = true;
+			$scope.revenueTrouver = true;
+			$scope.valeurTrouver = true;
+		
+			var anneFin = $scope.dateFin.getFullYear();
+			var moisFin = $scope.dateFin.getMonth() + 1;
+			var anneDeb = $scope.dateDebut.getFullYear();
+			var moisDeb = $scope.dateDebut.getMonth() + 1;
+			
+			var dateAnneePasser = new Date($scope.dateDebut);
+			var differenceMois = ((anneFin - anneDeb)*12) - (moisDeb) + (moisFin) + 1;
+			
+			if(differenceMois <= 0){
+				$scope.depenseTrouver = false;
+				$scope.revenueTrouver = false;
+				$scope.valeurTrouver = false;
+			}
 			
 			var nomMois = ["jan", "fev", "mars", "avril", "mai", "juin", "juil", "aout", "sep", "oct", "nov", "dec"];
+				
+			var dataRes = [];
+			var dataRev = [];
+			var tabVide = [];
+			var axeX = [];
+				
+				
+			for(var i = 0; i<differenceMois; i++){
+				dataRes.push(0); //Facture
+				axeX.push(0);
+				tabVide.push(0);
+				dataRev.push(0); //Revenue
+			}
 			
-			//Pour l'affichage
-			$scope.idChoisie = account.id;
-			
-		    //Retourne une liste de billsqui contient entre date aujourhui moins 1 ans
-			//http://localhost:8081/rest/entity/stats/{account}?sortBy=created&filterBy=created;bt;date,dateAnneePasser
-			
-			//Un mock objet de ce que ceci retournerais
-			var result = mockResult($scope.idChoisie);
-		
-			
-			//Liste de nom des 12 dernier mois
-			dateAnneePasser.setDate(1);//S'assure de ne pas etre dans le cas du 31 octobre + 1 mois.
-			for(var i=0; i<12; i++){
+			//Par mois
+			for(var i=0; i<differenceMois; i++){
 				axeX[i] = nomMois[dateAnneePasser.getMonth()] + ' '+ dateAnneePasser.getFullYear();
 				dateAnneePasser.setMonth(dateAnneePasser.getMonth() + 1);
 			}
 			
-			//Somme des valeur pour chaque mois en ordre.
-			for(i=0; i<result.length; i++){
-				var dateTmp = new Date(result[i].date_creation);
-				var posTmp = mod((dateTmp.getMonth() - premierMois),12);
-				data[posTmp] = Number((data[posTmp] + result[i].amount).toFixed(2));
+			var filterBy = [];
+			filterBy.push('bill_date;bt;' + parseDateToString($scope.dateDebut,false) + ',' +  parseDateToString($scope.dateFin,false));
+			
+			if($scope.idChoisie != -1){
+				filterBy.push('accountId;eq;'+$scope.idChoisie);
+			}
+			
+			BillsServices.findAll({filterBy:filterBy, sortBy:'bill_date'}, function(data){
+
+				if(data.length <= 0 && !$scope.revenueTrouver){
+					$scope.valeurTrouver = false;
+				}
+				
+				if(data.length <= 0){
+					$scope.depenseTrouver = false;
+					return;
+				}
+				
+				var parCategorie = {};
+				var parFourniseur = {};
+				
+				//Somme des valeur pour chaque mois en ordre.
+				for(i=0; i<data.length; i++){
+					var dateTmp = new Date(data[i].billDate);
+					
+					var anneDebTmp = dateTmp.getFullYear();
+					var moisDebTmp = dateTmp.getMonth() + 1;
+					
+					var posTmp = ((anneDebTmp - anneDeb)*12) - (moisDeb) + (moisDebTmp);
+					var montantTmp = data[i].amount.amount;
+					
+					if(parCategorie[data[i].categories[0].name] == null){
+						parCategorie[data[i].categories[0].name] = { 
+								montantTotal : 0,
+								montantParMois : tabVide.slice()
+						}	
+					}
+					parCategorie[data[i].categories[0].name].montantTotal += montantTmp;
+					parCategorie[data[i].categories[0].name].montantParMois[posTmp] += montantTmp;
+
+					if(parFourniseur[data[i].suppliers[0].supplierName] == null){
+						parFourniseur[data[i].suppliers[0].supplierName] = {
+							montantTotal : 0
+						}
+					}
+					parFourniseur[data[i].suppliers[0].supplierName].montantTotal += montantTmp;
+					
+					dataRes[posTmp] -= montantTmp;
+					
+				}
+				
+				self.creerGraph(axeX, parCategorie);
+				self.creerTab(data);
+				self.creerPieGraph(parCategorie, "Categorie");
+				self.creerPieGraph(parFourniseur, "Fourniseur");
+				
+				if(sincronisation || !$scope.revenueTrouver){
+					sincronisation = false;
+					self.creerGraphRevenuVsDepense(dataRev, dataRes, axeX);
+				}else{
+					sincronisation = true;
+				}
+				
+			});
+
+			var fliterByRevenur = [];
+			fliterByRevenur.push('rev_starting;lt;' + parseDateToString($scope.dateFin,false));
+			if($scope.idChoisie != -1){
+				fliterByRevenur.push('accountId;eq;'+$scope.idChoisie);
 			}
 			
 			
-			self.creerGraph(axeX, data);
-			self.creerTab(result);
-			
+			RevenuesService.findAll({filterBy:fliterByRevenur}, function(dataDeRevenue){
+	
+				if(dataDeRevenue.length <= 0 && !$scope.depenseTrouver){
+					$scope.valeurTrouver = false;
+				}
+				
+				if(dataDeRevenue.length <= 0){
+					$scope.revenueTrouver = false;
+					return;
+				}
+				var vraiDonneDecode = self.donneVraiRevenue(dataDeRevenue);
+				if(vraiDonneDecode == null){
+					$scope.revenueTrouver = false;
+					return;
+				}
+				
+				for(var i=0; i< vraiDonneDecode.length; i++){
+					var dateTmp = new Date(vraiDonneDecode[i].date);
+					
+					var anneDebTmp = dateTmp.getFullYear();
+					var moisDebTmp = dateTmp.getMonth() + 1;
+					
+					var posTmp = ((anneDebTmp - anneDeb)*12) - (moisDeb) + (moisDebTmp);
+					
+					dataRev[posTmp] += vraiDonneDecode[i].montant;
+				}
+				
+				if(sincronisation || !$scope.depenseTrouver){
+					sincronisation = false;
+					self.creerGraphRevenuVsDepense(dataRev, dataRes, axeX);
+				}else{
+					sincronisation = true;
+				}
+				
+			});
 		};
 		
+		self.creerGraphRevenuVsDepense = function (revenu, depense, axeX){
+			
+			var profit = [];
+			
+			for(var i = 0; i < revenu.length; i++){
+				profit.push(revenu[i] + depense[i]);
+			}
+			
+			$('#graphRevenuVsDepense').highcharts({
+				chart: {
+					type: 'column'
+				},
+				title: {
+					text: 'Revenues VS Dépenses'
+				},
+				xAxis: {
+					categories: axeX
+				},
+				credits:{
+					enabled:false
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal'
+					}
+				},
+				yAxis: {
+					title: {
+						text: 'Montant'
+					},
+					labels: {
+						formatter: function() {
+							return this.value;
+						}
+					}
+				},
+				series: [{
+					name : "Dépenses",
+					data : depense,
+					stack : 'versu'
+				},
+				{
+					name : "Revenues",
+					data : revenu,
+					stack : 'versu'
+				},
+				{
+					name : "Profits",
+					data : profit,
+					stack : 'profit'
+				}]
+			});
+		}
+		
+		self.creerPieGraph = function(dataPie, name){
+			var donneAff = [];
+			
+			for(var nom in dataPie){
+				var valeur = dataPie[nom].montantTotal;
+				donneAff.push({
+					name : nom,
+					y : valeur
+				})
+			}
+			
+			$('#graphPie' + name).highcharts({
+				chart: {
+					type: 'pie'
+				},
+				title: {
+					text: 'Dépense par ' + name
+				},
+				credits:{
+					enabled:false
+				},
+				series: [{
+					name : "Dépenses",
+					colorByPoint: true,
+					data : donneAff
+				}]
+			});
+		}
+		
 		self.creerGraph = function(axeX, data){
+			var donneAff = [];
+			for(var nom in data){
+				var valeur = data[nom].montantParMois;
+				donneAff.push({
+					name : nom,
+					data : valeur
+				})
+			}
+			
 			$('#graph1').highcharts({
 				chart: {
 					type: 'column'
 				},
 				title: {
-					text: 'Les 12 dernier mois'
+					text: 'Dépenses effectuée par mois'
 				},
 				xAxis: {
 					categories: axeX
+				},
+				plotOptions: {
+					column: {
+						stacking: 'normal'
+					}
+				},
+				tooltip: {
+					pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+					shared: true,
+					backgroundColor: '#FFFFFF'
 				},
 				yAxis: {
 					title: {
@@ -224,10 +311,7 @@ angular.module('inf6150FrontendApp')
 				credits:{
 					enabled:false
 				},
-				series: [{
-					data: data,
-					name: "Montants totals depensés"
-				}]
+				series: donneAff
 			});
 		};
 		
@@ -236,29 +320,123 @@ angular.module('inf6150FrontendApp')
 				self.table.destroy();
 			}
 			
-			
 			self.table = $('#tab1').DataTable( {
 				"data" : data,
 				"columns" : [
 					{
-						"data" : "date_creation", 
-						"title" : "Date de la facture"
+						"data" : "billDate", 
+						"title" : "Date de la facture",
+						"render": function (data) {
+							var dateTmp = new Date(data);
+							return parseDateToString(dateTmp,true);
+						}
 					},
 					{
-						"data" : "amount", 
+						"data" : "categories[0].name",
+						"title" : "Catégorie"
+					},
+					{
+						"data" : "suppliers[0].supplierName",
+						"title" : "Fourniseur"
+					},
+					{
+						"data" : "amount.amount", 
 						"title" : "Montant"
 					}
-				]
+				],
+				destroy: true
 			});	
 		};
 		
+		self.donneVraiRevenue = function(data){
+			var vraiDonner = [];
+			//Transformer les data en valeur reel
+			for(var i = 0; i<data.length; i++){
+				var dateDepart = new Date(data[i].revStarting);
+										
+				if(data[i].frequency != "ONCE"){
+					
+					//ajuste la date au bon moment
+					while(dateDepart<$scope.dateDebut){
+						if(self.addFrequenceDate(dateDepart, data[i].frequency)){
+							return;
+						}
+					}
+					
+					while(dateDepart < $scope.dateFin){
+						var erreur = false;
+						vraiDonner.push({
+							date : new Date(dateDepart),
+							montant : data[i].amount.amount
+						})
+						
+						if(self.addFrequenceDate(dateDepart, data[i].frequency)){
+							return;
+						}
+							
+					}
+				}else{
+					vraiDonner.push({
+							date : new Date(data[i].revStarting),
+							montant : data[i].amount.amount
+					})
+				}		
+			}
+				
+			return vraiDonner;
+			
+		}
+		
+		self.addFrequenceDate = function(dateAdd, frequence){
+			var valeurRetour = false;
+			switch(frequence){
+				case "WEEKLY":
+					dateAdd.setDate(dateAdd.getDate() + 7);
+					break;
+				case "MONTHLY":
+					dateAdd.setMonth(dateAdd.getMonth() + 1);
+					break;
+				case "DAILY":
+					dateAdd.setDate(dateAdd.getDate() + 1);
+					break;
+				case "BI_WEEKLY":
+					dateAdd.setDate(dateAdd.getDate() + 14);
+					break;
+				default:
+					valeurRetour = true;
+			}
+			return valeurRetour;
+		}
+		
 		AccountService.findAll({}, function(data){
-			$scope.listeAccount = data;
-			$scope.listeAccount.unshift({
-				accountName : "Tous",
-				id : -1
-			});
-			$scope.aff12DernierMois(data[0]);
+			if(data.length > 0 ){
+				$scope.CompteTrouver = true;
+				//Annee passer (-11 mois)
+				var dateAnneePasser = new Date();
+				dateAnneePasser.setFullYear(dateAnneePasser.getFullYear()-1);
+				dateAnneePasser.setDate(1);		
+				dateAnneePasser.setMonth(dateAnneePasser.getMonth() + 1);
+			
+				$scope.listeAccount = data;
+				$scope.dateDebut = dateAnneePasser;
+				$scope.dateFin = new Date();
+				$scope.listeAccount.unshift({
+					accountName : "Tous",
+					id : -1
+				});
+				
+				$scope.changerDeCompte(data[0]);
+			}else{
+				$scope.CompteTrouver = false;
+			}
+			
+			
 		});
+		
+		$scope.changerDeCompte = function(compte){
+			self.account = compte;
+			$scope.idChoisie = compte.id;
+			$scope.affEntreDeuxMois();
+		}
 
   }]);
