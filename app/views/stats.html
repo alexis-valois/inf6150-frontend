@@ -1,9 +1,32 @@
 <div ng-controller="StatsCtrl">
-		<div ng-repeat="account in listeAccount" class="btn-group" role="group" style="padding-bottom:15px;">
-			<button ng-click="aff12DernierMois(account);" ng-class="{active : idChoisie === account.id}" type="button" class="btn btn-default">{{account.accountName}}</button>
+		<div ng-show="CompteTrouver">
+			<div ng-repeat="account in listeAccount" class="btn-group" role="group" style="padding-bottom:15px;">
+				<button ng-click="changerDeCompte(account);" ng-class="{active : idChoisie === account.id}" type="button" class="btn btn-default">{{account.accountName}}</button>
+			</div>
+			<div class="input-group" style="padding-bottom:20px;">
+				<input  ng-blur="affEntreDeuxMois();" type="date" class="form-control" ng-model="dateDebut" >
+				<span class="input-group-addon">À</span>
+				<input  ng-blur="affEntreDeuxMois();" type="date" class="form-control" ng-model="dateFin" >
+			</div>
+			
+			<div ng-show="valeurTrouver">
+				<h1 class="text-center">Rapport financier</h1>
+				<div id="graphRevenuVsDepense"></div>
+			</div>
+			
+			<div ng-show="depenseTrouver">
+				<h1 class="text-center">Rapport sur les dépenses</h1>
+				<div id="graph1"></div>
+				<div class="row">
+					<div class="col-sm-6" id="graphPieCategorie"></div>
+					<div class="col-sm-6" id="graphPieFourniseur"></div>
+				</div>
+				
+				<h3 class="text-center">Liste de tout les dépenses</h3>
+				<table id="tab1" class="table table-striped table-bordered" cellspacing="0" width="100%"></table >
+			</div>
+			
+			<h2 ng-hide="valeurTrouver" class="text-center">Aucune valeur trouvée dans vos <a href="/#/bills">dépenses</a> ou <a href="/#/revenues">revenue</a> pour les dates spécifiées.</h1>
 		</div>
-		<div id="graph1"></div>
-		<table class="display" id="tab1"></table >
-	
-	
+		<h2 ng-hide="CompteTrouver" class="text-center">Aucun compte trouvé, veuillez les insérer <a href="/#/accounts">ici</a>.</h1>
 </div>
