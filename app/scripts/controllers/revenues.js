@@ -64,12 +64,17 @@ angular.module('inf6150FrontendApp')
   			}  			
   		};
 
-	    $scope.deleteRevenue = function(revenueId) {
-	        RevenuesService.delete({ id: revenueId })
+	    $scope.deleteRevenue = function(revenueId, idx) {
+	        if (revenueId){
+	        	RevenuesService.delete({ id: revenueId })
 	            .$promise.then(
 	                    function(){
 	                        $scope.revenues = RevenuesService.findAll({subEntity:'accounts;accountId'});
 	                    }
 	                );
+	        }else{
+	        	$scope.revenues.splice(idx);
+	        }
+	        
 	    };
   }]);

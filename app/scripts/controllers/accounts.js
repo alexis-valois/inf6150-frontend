@@ -41,17 +41,23 @@ angular.module('inf6150FrontendApp')
         if (account.id){
   				AccountService.update({ id: account.id }, account);
   			}else{
-  				AccountService.create(account);
+  				AccountService.create(account, function(){
+            $scope.accounts = AccountService.findAll();
+          });
   			}  			
   		};
 
-	    $scope.deleteAccount = function(accountId) {
-	        AccountService.delete({ id: accountId })
-	            .$promise.then(
-	                    function(){
-	                        $scope.accounts = AccountService.findAll();
-	                    }
-	                );
+	    $scope.deleteAccount = function(accountId, idx) {
+	        if (accountId){
+            AccountService.delete({ id: accountId })
+              .$promise.then(
+                      function(){
+                          $scope.accounts = AccountService.findAll();
+                      }
+                  );
+          }else{
+            $scope.accounts.splice(idx);
+          }         
 	        
 	    };
 }]);

@@ -67,12 +67,12 @@ angular.module('inf6150FrontendApp')
         bill.categorieId = this.selectedCategorie;
         bill.supplierId = this.selectedSupplier;
         bill.amount.currency = this.selectedCurrency;
-		bill.billDate = this.dateBill;
+		    bill.billDate = this.dateBill;
         
   		if (bill.id){
   			BillsServices.update({ id: bill.id }, bill).$promise.then(
                 function(){
-					$scope.bills = BillsServices.findAll();
+					         $scope.bills = BillsServices.findAll();
                 }
             );
 		}else{
@@ -84,13 +84,18 @@ angular.module('inf6150FrontendApp')
 		}  			
   	};
 
-  		$scope.deleteBills = function(billId) {
-	        BillsServices.delete({ id: billId })
-	            .$promise.then(
-	                    function(){
-	                        $scope.bills = BillsServices.findAll();
-	                    }
-	                );
+  		$scope.deleteBills = function(billId, idx) {
+	        if (billId){
+            BillsServices.delete({ id: billId })
+              .$promise.then(
+                      function(){
+                          $scope.bills = BillsServices.findAll();
+                      }
+                  );
+            }else{
+              $scope.bills.splice(idx);
+            }
+          
 	    };
 
   }]);
