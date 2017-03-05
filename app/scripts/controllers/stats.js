@@ -8,19 +8,14 @@
  * Controller of the inf6150FrontendApp
  */
  
- //Permet de faire des modulo négatif et positif (javascript ne retourne pas le bon resultat avec un negatif)
- function mod(n, m) {
-        return ((n % m) + m) % m;
-}
- 
 function parseDateToString(date, estAffichee){
 	if(!estAffichee){
 		return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 	}else{
-		var jourD = '' + date.getDate()
+		var jourD = '' + date.getDate();
 		var moisD = '' + (date.getMonth() + 1);
-		if (moisD.length < 2) moisD = '0' + moisD;
-		if (jourD.length < 2) jourD = '0' + jourD;
+		if (moisD.length < 2) { moisD = '0' + moisD; }
+		if (jourD.length < 2) { jourD = '0' + jourD; }
 
 		return date.getFullYear() + '-' + moisD + '-' + jourD;
 	}
@@ -79,7 +74,7 @@ angular.module('inf6150FrontendApp')
 			var filterBy = [];
 			filterBy.push('bill_date;bt;' + parseDateToString($scope.dateDebut,false) + ',' +  parseDateToString($scope.dateFin,false));
 			
-			if($scope.idChoisie != -1){
+			if($scope.idChoisie !== -1){
 				filterBy.push('accountId;eq;'+$scope.idChoisie);
 			}
 			
@@ -107,19 +102,19 @@ angular.module('inf6150FrontendApp')
 					var posTmp = ((anneDebTmp - anneDeb)*12) - (moisDeb) + (moisDebTmp);
 					var montantTmp = data[i].amount.amount;
 					
-					if(parCategorie[data[i].categories[0].name] == null){
+					if(parCategorie[data[i].categories[0].name] === null){
 						parCategorie[data[i].categories[0].name] = { 
 								montantTotal : 0,
 								montantParMois : tabVide.slice()
-						}	
+						};	
 					}
 					parCategorie[data[i].categories[0].name].montantTotal += montantTmp;
 					parCategorie[data[i].categories[0].name].montantParMois[posTmp] += montantTmp;
 
-					if(parFourniseur[data[i].suppliers[0].supplierName] == null){
+					if(parFourniseur[data[i].suppliers[0].supplierName] === null){
 						parFourniseur[data[i].suppliers[0].supplierName] = {
 							montantTotal : 0
-						}
+						};
 					}
 					parFourniseur[data[i].suppliers[0].supplierName].montantTotal += montantTmp;
 					
@@ -143,7 +138,7 @@ angular.module('inf6150FrontendApp')
 
 			var fliterByRevenur = [];
 			fliterByRevenur.push('rev_starting;lt;' + parseDateToString($scope.dateFin,false));
-			if($scope.idChoisie != -1){
+			if($scope.idChoisie !== -1){
 				fliterByRevenur.push('accountId;eq;'+$scope.idChoisie);
 			}
 			
@@ -159,7 +154,7 @@ angular.module('inf6150FrontendApp')
 					return;
 				}
 				var vraiDonneDecode = self.donneVraiRevenue(dataDeRevenue);
-				if(vraiDonneDecode == null){
+				if(vraiDonneDecode === null){
 					$scope.revenueTrouver = false;
 					return;
 				}
@@ -237,7 +232,7 @@ angular.module('inf6150FrontendApp')
 					stack : 'profit'
 				}]
 			});
-		}
+		};
 		
 		self.creerPieGraph = function(dataPie, name){
 			var donneAff = [];
@@ -247,7 +242,7 @@ angular.module('inf6150FrontendApp')
 				donneAff.push({
 					name : nom,
 					y : valeur
-				})
+				});
 			}
 			
 			$('#graphPie' + name).highcharts({
@@ -266,7 +261,7 @@ angular.module('inf6150FrontendApp')
 					data : donneAff
 				}]
 			});
-		}
+		};
 		
 		self.creerGraph = function(axeX, data){
 			var donneAff = [];
@@ -275,7 +270,7 @@ angular.module('inf6150FrontendApp')
 				donneAff.push({
 					name : nom,
 					data : valeur
-				})
+				});
 			}
 			
 			$('#graph1').highcharts({
@@ -354,7 +349,7 @@ angular.module('inf6150FrontendApp')
 			for(var i = 0; i<data.length; i++){
 				var dateDepart = new Date(data[i].revStarting);
 										
-				if(data[i].frequency != "ONCE"){
+				if(data[i].frequency !== "ONCE"){
 					
 					//ajuste la date au bon moment
 					while(dateDepart<$scope.dateDebut){
@@ -364,11 +359,10 @@ angular.module('inf6150FrontendApp')
 					}
 					
 					while(dateDepart < $scope.dateFin){
-						var erreur = false;
 						vraiDonner.push({
 							date : new Date(dateDepart),
 							montant : data[i].amount.amount
-						})
+						});
 						
 						if(self.addFrequenceDate(dateDepart, data[i].frequency)){
 							return;
@@ -379,13 +373,13 @@ angular.module('inf6150FrontendApp')
 					vraiDonner.push({
 							date : new Date(data[i].revStarting),
 							montant : data[i].amount.amount
-					})
+					});
 				}		
 			}
 				
 			return vraiDonner;
 			
-		}
+		};
 		
 		self.addFrequenceDate = function(dateAdd, frequence){
 			var valeurRetour = false;
@@ -406,7 +400,7 @@ angular.module('inf6150FrontendApp')
 					valeurRetour = true;
 			}
 			return valeurRetour;
-		}
+		};
 		
 		AccountService.findAll({}, function(data){
 			if(data.length > 0 ){
@@ -437,6 +431,6 @@ angular.module('inf6150FrontendApp')
 			self.account = compte;
 			$scope.idChoisie = compte.id;
 			$scope.affEntreDeuxMois();
-		}
+		};
 
   }]);

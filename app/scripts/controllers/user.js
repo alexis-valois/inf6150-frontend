@@ -10,39 +10,41 @@
 angular.module('inf6150FrontendApp')
 .controller('UserCtrl', ['$rootScope','$scope', '$http', '$location', 'localStorageService', 'UserFactory', '$window',
   function($rootScope, $scope, $http, $location, localStorageService, UserFactory, $window) {
-    $scope.login = function() {
-        var headers = $scope.user ? {
-          username : $scope.user.username,
-          password : $scope.user.password,
-        } : {};
-        $http.post('http://localhost:8081/user/login', {} ,{headers: headers})
-        .success(function(data) {
+    
+    var successLogin = function(reponse) {
+            var data = reponse.data;
             console.log('login successful, sessionToken = ' + data.sessionToken);
-			localStorageService.set('nomUtilisateur', null);
+            localStorageService.set('nomUtilisateur', null);
             localStorageService.set('authenticated', true);
             localStorageService.set('user', data);
             $http.defaults.headers.common.sessionToken = localStorageService.get('user').sessionToken;
             $rootScope.authenticated = true;
             $location.path('/');
-        })
-        .error(function(data) {
+        };
+
+    var errorLogin = function(reponse) {
+            var data = reponse.data;
             console.log('login error');
-			console.log(data);
-			if(data.exists){
-				$scope.error = true;
-				 localStorageService.set('authenticated', false);
-				 localStorageService.set('user', null);
+            console.log(data);
+            if(data.exists){
+                $scope.error = true;
+                 localStorageService.set('authenticated', false);
+                 localStorageService.set('user', null);
                  $rootScope.authenticated = false;
-				 localStorageService.set('nomUtilisateur', null);
-			}else{
-				//Rediriger
-				 localStorageService.set('nomUtilisateur', $scope.user.username);
-				 $window.location.href = '/#/register';
-			}
-			
-            
-           
-        });
+                 localStorageService.set('nomUtilisateur', null);
+            }else{
+                //Rediriger
+                 localStorageService.set('nomUtilisateur', $scope.user.username);
+                 $window.location.href = '/register';
+            }          
+        };
+
+    $scope.login = function() {
+        var headers = $scope.user ? {
+          username : $scope.user.username,
+          password : $scope.user.password,
+        } : {};
+        $http.post('http://localhost:8081/user/login', {} ,{headers: headers}).then(successLogin, errorLogin);
     };
 	
     // callback for ng-click 'createNewUser':
@@ -55,7 +57,7 @@ angular.module('inf6150FrontendApp')
         );          
     };
 
-	if(localStorageService.get('nomUtilisateur') != null){
+	if(localStorageService.get('nomUtilisateur') !== null){
 			$scope.user = {};
 			$scope.user.username = localStorageService.get('nomUtilisateur');
 	}

@@ -24,7 +24,7 @@ angular
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){
     localStorageServiceProvider.setPrefix('EB');
   }])
-  .config(function ($routeProvider, $httpProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -56,7 +56,6 @@ angular
         controller: 'AccountsCtrl',
         controllerAs: 'Accounts'
       })
-
       .when('/categories', {
         templateUrl: 'views/categories.html',
         controller: 'CategoriesCtrl',
@@ -76,7 +75,7 @@ angular
         controller: 'BillsCtrl',
         controllerAs: 'Bills'
       })
-	  .when('/stats', {
+	    .when('/stats', {
         templateUrl: 'views/stats.html',
         controller: 'StatsCtrl',
         controllerAs: 'Stats'
@@ -89,18 +88,18 @@ angular
       .otherwise({
         redirectTo: '/login'
       });
-      
+      $locationProvider.html5Mode(true);
       $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     
   })
   .run(function($rootScope, $http, $location, localStorageService, EnumsService) {
      $rootScope.logout = function() {
       $http.post('http://localhost:8081/user/logout', {})
-        .success(function() {         
+        .then(function() {         
             $location.path('/');
             $rootScope.loggedOut = true;
-        })
-        .error(function() {
+        },
+        function() {
             $rootScope.error = true;
         });
         localStorageService.set('user', null);

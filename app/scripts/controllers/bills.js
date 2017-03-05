@@ -60,7 +60,7 @@ angular.module('inf6150FrontendApp')
       this.selectedCurrency = bill.amount.currency;
       this.dateBill = new Date(bill.billDate);
     }		
-	}
+	};
 	
   	$scope.createOrUpdate = function(bill){
         bill.accountId = this.selectedAccount;
